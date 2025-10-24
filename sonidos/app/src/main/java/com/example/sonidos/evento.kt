@@ -1,55 +1,39 @@
 package com.example.sonidos
-
-import android.media.MediaPlayer
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.ImageView
+import android.widget.Toast
 class evento : AppCompatActivity() {
-
-    private var mediaPlayer: MediaPlayer?=null
-
+    var ciclo = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_evento)
-
         val mainView = findViewById<androidx.constraintlayout.widget.ConstraintLayout>(R.id.main)
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val imagenes = listOf(
-            R.id.img1, R.id.img2, R.id.img3, R.id.img4,
-            R.id.img5, R.id.img6, R.id.img7, R.id.img8,
-            R.id.img9, R.id.img10, R.id.img11, R.id.img12
+        val botones = listOf(
+            R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
+            R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8,
+            R.id.btn9, R.id.btn10, R.id.btn11, R.id.btn12
         )
-        // Recursos de sonido correspondientes
-        val sonidos = listOf(
-            R.raw.hidanlaugh, R.raw.orochilaugh, R.raw.tobivoice, R.raw.deidaravoice,
-            R.raw.shinra, R.raw.kisamejutsu, R.raw.konanvoice, R.raw.kakuzuvoice,
-            R.raw.sasorivoice, R.raw.amaterasu, R.raw.nagatopain, R.raw.zetsuvoice
-        )
+        botones.forEach{ idBoton ->
+            findViewById<Button>(idBoton)?.setOnClickListener {
+                ciclo++
+                Toast.makeText(
+                    this,
+                    "Hola Mundo" + " Numero de clics dados: " + ciclo,
+                    Toast.LENGTH_SHORT).show()
 
-        imagenes.forEachIndexed { index, i ->
-            findViewById<ImageView>(i).setOnClickListener {
-                mediaPlayer?.stop()
-                mediaPlayer?.release()
-
-                mediaPlayer = MediaPlayer.create(this, sonidos[index])
-                mediaPlayer?.start()
-
-                mediaPlayer?.setOnCompletionListener { mp ->
-                    mp.release()
-                }
             }
         }
+    }
 
-
-        }
 
 }
